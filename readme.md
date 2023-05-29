@@ -30,7 +30,7 @@ We welcome contributions to enhance our collection and provide a broader range o
 
 ## License
 
-This project is licensed under the [Personal](LICENSE), which means you are free to use, modify, and distribute the music files according to the terms of the license.
+This project is licensed under the [Personal](license.md), which means you are free to use, modify, and distribute the music files according to the terms of the license.
 
 ## Contact
 
