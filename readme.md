@@ -13,7 +13,7 @@ Welcome to our simple website where you can find a collection of calming, chill 
 
 To get started with our music and experience its calming effects, follow these simple steps:
 
-1. Clone this repository to your local machine. Or acces the website: [A rain with music to relax](https://www.rain-for-relax.yuricunha.xyz/).
+1. Clone this repository to your local machine. Or acces the website: [A rain with music to relax](https://www.rain-for-relax.yuricunha.com/).
 2. Open the `index.html` file in your preferred web browser.
 3. Browse through the music collection and select a track that resonates with your mood.
 4. Click on the play button to start listening.
@@ -39,4 +39,3 @@ If you have any questions, suggestions, or feedback, please feel free to reach o
 ---
 
 Enjoy the rain with music and find your moments of relaxation!
-
