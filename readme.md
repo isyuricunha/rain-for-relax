@@ -34,7 +34,7 @@ This project is licensed under the [Personal](license.md), which means you are f
 
 ## Contact
 
-If you have any questions, suggestions, or feedback, please feel free to reach out to us at [isyuricunha@duck.com](mailto:isyuricunha@duck.com). We would love to hear from you!
+If you have any questions, suggestions, or feedback, please feel free to reach out to us at [me@yuricunha.com](mailto:me@yuricunha.com). We would love to hear from you!
 
 ---
 
