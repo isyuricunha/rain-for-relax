@@ -25,6 +25,21 @@
         event.preventDefault();
       });
     </script>
+
+    <script>
+      // This code tries to prevent console from opening
+      Object.defineProperty(window, "console", {
+        value: {
+          log: function () {},
+          warn: function () {},
+          error: function () {},
+          debug: function () {},
+        },
+        configurable: false,
+        enumerable: false,
+        writable: false,
+      });
+    </script>
   </head>
   <body>
     <video id="background-video" autoplay loop muted>
