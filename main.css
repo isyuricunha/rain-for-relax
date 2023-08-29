@@ -79,14 +79,3 @@ img:hover {
   transition: all 0.2s ease-in-out;
   transform: rotate(-8deg);
 }
-
-.no-right-click {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 20px;
-  border: 1px solid #ccc;
-  background-color: #fff;
-  pointer-events: none; /* Allow clicking through the element */
-}
