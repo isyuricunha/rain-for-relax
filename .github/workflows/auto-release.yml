@@ -54,11 +54,11 @@ jobs:
           BRANCH_HISTORY: compare
           TAG_NAME: "v${{ steps.taggerFinal.outputs.new_tag }}"
 
-      - name: Generate release notes
-        id: release_notes
-        run: |
-          notes=$(git log --oneline --decorate --no-merges "${{ steps.taggerFinal.outputs.tag }}..${{ steps.taggerFinal.outputs.new_tag }}")
-          echo "::set-output name=notes::${notes}"
+      # - name: Generate release notes
+      #   id: release_notes
+      #   run: |
+      #     notes=$(git log --oneline --decorate --no-merges "${{ steps.taggerFinal.outputs.tag }}..${{ steps.taggerFinal.outputs.new_tag }}")
+      #     echo "::set-output name=notes::${notes}"
 
       - name: "Generate tag and create release"
         id: create_release
