@@ -1,57 +1,22 @@
-name: deploy release and notes / change logs
-
+name: Bump version
 on:
   push:
-    branches: main
-    tags:
-      - "[0-9]+.*"
-
+    branches:
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.11]
-
     steps:
-      - uses: actions/checkout@v3
-
-      - name: config git user
-        run: |
-          git config user.name "${GITHUB_ACTOR}"
-          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-
-      - name: Minor version for each merge
-        id: taggerDryRun
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: "0"
+      - name: Bump version and push tag
         uses: anothrNick/github-tag-action@1.36.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
           DRY_RUN: true
-          DEFAULT_BUMP: patch
-          BRANCH_HISTORY: compare
+          INITIAL_VERSION: 0.1.0
           VERBOSE: true
-          TAG_NAME: "v${{ steps.taggerDryRun.outputs.new_tag }}"
-
-      - name: echo new tag
-        run: |
-          echo "The next tag version will be: ${{ steps.taggerDryRun.outputs.new_tag }}"
-      - name: echo tag
-        run: |
-          echo "The current tag is: ${{ steps.taggerDryRun.outputs.tag }}"
-      - name: echo part
-        run: |
-          echo "The version increment was: ${{ steps.taggerDryRun.outputs.part }}"
-      # DO MY BUILD HERE
-      # IN CASE OF FAILURE, THE STEP BELOW WILL NOT RUN.
-
-      - name: Minor version for each merge
-        id: taggerFinal
-        uses: anothrNick/github-tag-action@1.36.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WITH_V: true
           DEFAULT_BUMP: patch
-          BRANCH_HISTORY: compare
-          VERBOSE: true
-          TAG_NAME: "v${{ steps.taggerFinal.outputs.new_tag }}"
+          RELEASE_BRANCHES: .*, release.*,hotfix.*,master
