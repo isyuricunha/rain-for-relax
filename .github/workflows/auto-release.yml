@@ -30,6 +30,7 @@ jobs:
           DRY_RUN: true
           DEFAULT_BUMP: patch
           BRANCH_HISTORY: compare
+          VERBOSE: true
           TAG_NAME: "v${{ steps.taggerDryRun.outputs.new_tag }}"
 
       - name: echo new tag
@@ -52,6 +53,7 @@ jobs:
           WITH_V: true
           DEFAULT_BUMP: patch
           BRANCH_HISTORY: compare
+          VERBOSE: true
           TAG_NAME: "v${{ steps.taggerFinal.outputs.new_tag }}"
 
       - name: Generate release notes
