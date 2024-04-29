@@ -29,8 +29,6 @@ jobs:
           WITH_V: true
           DRY_RUN: true
           DEFAULT_BUMP: patch
-          BRANCH_HISTORY: compare
-          RELEASE_BRANCHES: .*,release.*,hotfix.*,master
           TAG_NAME: "v${{ steps.taggerDryRun.outputs.new_tag }}"
 
       - name: echo new tag
@@ -52,15 +50,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
           DEFAULT_BUMP: patch
-          BRANCH_HISTORY: compare
-          RELEASE_BRANCHES: .*,release.*,hotfix.*,master
           TAG_NAME: "v${{ steps.taggerFinal.outputs.new_tag }}"
 
-      - name: Generate release notes
-        id: release_notes
-        run: |
-          notes=$(git log --oneline --decorate --no-merges "${{ steps.taggerFinal.outputs.tag }}..${{ steps.taggerFinal.outputs.new_tag }}")
-          echo "::set-output name=notes::${notes}"
+      # - name: Generate release notes
+      #   id: release_notes
+      #   run: |
+      #     notes=$(git log --oneline --decorate --no-merges "${{ steps.taggerFinal.outputs.tag }}..${{ steps.taggerFinal.outputs.new_tag }}")
+      #     echo "::set-output name=notes::${notes}"
 
       # - name: "Generate tag and create release"
       #   id: create_release
