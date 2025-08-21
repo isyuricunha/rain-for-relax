@@ -1,41 +1,157 @@
 # A Rain with Music to Relax
 
-Welcome to our simple website where you can find a collection of calming, chill music to help you relax. Whether you're trying to unwind after a long day or just looking for a peaceful background soundtrack, you'll find what you need here. Simply press play and let the soothing sounds wash over you. Sit back, close your eyes, and just let go. You deserve a moment of calm, and we hope our music can provide it for you.
+Rain for Relax is a minimal, single-page ambient app that plays rain sounds over a looping background video. It is designed to help you unwind, focus, or sleep with a distraction-free interface.
 
-## Features
-
-- Curated collection of calming, chill music
-- Easy-to-use interface for a seamless listening experience
-- Continuous play for uninterrupted relaxation
-- High-quality audio for optimal enjoyment
-
-## Getting Started
-
-To get started with our music and experience its calming effects, follow these simple steps:
-
-1. Clone this repository to your local machine. Or acces the website: [A rain with music to relax](https://www.rain-for-relax.yuricunha.com/).
-2. Open the `index.html` file in your preferred web browser.
-3. Browse through the music collection and select a track that resonates with your mood.
-4. Click on the play button to start listening.
-5. Sit back, relax, and let the music transport you to a state of tranquility.
-
-## Contributing
-
-We welcome contributions to enhance our collection and provide a broader range of relaxing music to our users. If you have a suggestion for a track or would like to contribute your own music, please follow these steps:
-
-1. Fork this repository.
-2. Add your music file to the appropriate category or create a new category if needed.
-3. Update the `index.html` file with the necessary information about the track, such as title, artist, and duration.
-4. Submit a pull request, and our team will review your contribution.
-
-## License
-
-This project is licensed under the [Personal](license.md), which means you are free to use, modify, and distribute the music files according to the terms of the license.
-
-## Contact
-
-If you have any questions, suggestions, or feedback, please feel free to reach out to us at [me@yuricunha.com](mailto:me@yuricunha.com). We would love to hear from you!
+- Live site: https://www.rain-for-relax.yuricunha.com/
+- Tech: Plain HTML + CSS, no build step, static assets only
 
 ---
 
-Enjoy the rain with music and find your moments of relaxation!
+## Features
+
+- Simple, calming interface centered on a looping rain video (`assets/chill-rain.mp4`)
+- Auto-loop rain audio (`assets/rain-chill.mp3`)
+- One-click start link to comply with browser autoplay policies
+- Lightweight: no frameworks, no client-side routing, no external state
+- Social/contact links (GitHub, Discord, E-mail, Telegram, Website, LinkedIn)
+- Deployed as static site (GitHub Pages or Vercel)
+
+## How it works
+
+The app is built from two files:
+
+- `index.html` — The entire UI, including:
+  - Background `<video id="background-video">` source at `assets/chill-rain.mp4`
+  - `<audio autoplay loop>` source at `assets/rain-chill.mp3`
+  - Centered content container `.centered` showing logo and links
+  - A refresh link to prompt user gesture: `And, click here to begin.`
+  - Analytics snippets: Google Analytics (gtag) and Umami
+- `main.css` — Visual styling (fonts, layout, hover states, simple animations)
+
+Supporting assets live under `assets/`:
+
+- `assets/chill-rain.mp4` — background video (looped)
+- `assets/rain-chill.mp3` — rain audio (looped)
+- `assets/images/` — icons: `cloud.png`, `github.png`, `discord.png`, `mail.png`, `telegram.png`, `website.png`, `linkedin.png`, `logo.png`, `logo.ico`
+
+Deployment and metadata:
+
+- `.github/workflows/static.yml` — GitHub Pages deploy workflow
+- `.github/workflows/auto-release.yml` — automated tagging and releases
+- `vercel.json` — Vercel GitHub integration configuration
+- `license.md` — custom personal license by the author
+
+## Project structure
+
+```
+.
+├─ index.html
+├─ main.css
+├─ assets/
+│  ├─ chill-rain.mp4
+│  ├─ rain-chill.mp3
+│  └─ images/
+│     ├─ cloud.png
+│     ├─ github.png
+│     ├─ discord.png
+│     ├─ mail.png
+│     ├─ telegram.png
+│     ├─ website.png
+│     ├─ linkedin.png
+│     ├─ logo.png
+│     └─ logo.ico
+├─ .github/workflows/
+│  ├─ static.yml
+│  └─ auto-release.yml
+├─ vercel.json
+├─ license.md
+└─ readme.md
+```
+
+## Local development
+
+No build tools are required.
+
+1. Clone the repo.
+2. Open `index.html` directly in your browser, or serve the folder via any static server.
+3. If your browser blocks autoplay audio, click the “click here to begin” link to start playback.
+
+Tip: to run a simple server (examples):
+
+- Python 3: `python -m http.server 8000`
+- Node (serve): `npx serve .`
+
+## Deployment
+
+This is a static site; deploy any way you prefer. Two options are provided in-repo.
+
+### GitHub Pages
+
+- Workflow: `.github/workflows/static.yml` uploads the repository as a Pages artifact on pushes to `main`.
+- Ensure Pages is enabled in the repository settings and points to GitHub Actions.
+
+### Vercel
+
+- You can import the repository into Vercel.
+- `vercel.json` currently only silences GitHub comments, but default static deployment works.
+
+## Customization
+
+- Background video: replace `assets/chill-rain.mp4` and update `index.html` `<source>` if you change the filename.
+- Audio loop: replace `assets/rain-chill.mp3` and update `index.html` `<source>` if you change the filename.
+- Logo: update `assets/images/cloud.png` and `#logo` in `index.html`.
+- Text copy: edit the heading and link text in `index.html`.
+- Styles: tweak sizes, typography, and hover effects in `main.css`.
+- Social links: update the `<a>` tags in `index.html`.
+
+## Accessibility and UX notes
+
+- Autoplay restrictions: Many browsers block autoplay with sound. The page includes a prominent link that triggers a navigation refresh, which counts as a user gesture and starts audio.
+- Color/contrast: Text is white over a moving background. If needed, consider adding a semi-opaque overlay behind text for improved readability.
+- Keyboard: Page has no interactive controls beyond links; tab order is minimal. Consider adding a play/pause control for audio for better accessibility.
+- Motion: Background video is always on. Consider an optional “reduce motion” toggle for sensitive users.
+
+## Privacy and analytics
+
+This site includes:
+
+- Google Analytics (gtag) with measurement ID `G-YMBMJST8GR`
+- Umami analytics script from `https://umami.yuricunha.com/` with `data-website-id="ae078a6c-02fb-45c2-96d3-3274da991093"`
+
+If you fork this project, replace or remove these analytics snippets in `index.html`.
+
+## Troubleshooting
+
+- No audio on load: Click the “click here to begin” link or interact with the page to satisfy autoplay policies.
+- Video not loading: Confirm `assets/chill-rain.mp4` exists and the path in `index.html` matches.
+- Broken icons: Check image filenames and paths in `assets/images/`.
+- GitHub Pages not updating: Ensure Actions succeeded and Pages is set to deploy from GitHub Actions.
+
+## Contributing
+
+Contributions that improve accessibility, performance, or add optional controls (play/pause, volume, mute, reduce motion) are welcome.
+
+1. Fork the repo
+2. Create a feature branch
+3. Make changes with clear commits
+4. Open a pull request describing the change and rationale
+
+For media contributions, ensure you have the rights to distribute the audio/video.
+
+## License
+
+This project is licensed under the author’s personal license. See `license.md` for details and terms on inspiration, attribution, and restrictions.
+
+## Credits
+
+- Author: Yuri Cunha
+- Logo and icons: located under `assets/images/`
+- Media: rain video and audio included under `assets/`
+
+## Contact
+
+Questions or feedback: me@yuricunha.com
+
+---
+
+Enjoy the rain and take a moment to breathe.
