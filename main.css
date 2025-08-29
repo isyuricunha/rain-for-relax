@@ -124,6 +124,36 @@ a:hover {
   outline: none;
 }
 
+/* Keyboard help notification */
+.keyboard-help {
+  margin: 15px auto;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  backdrop-filter: blur(5px);
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 0.5s ease-out 2s forwards;
+  max-width: 80%;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
 /* Hide the volume slider by default on mobile */
 @media (max-width: 480px) {
   .volume-control {
@@ -138,6 +168,11 @@ a:hover {
   #mute-btn svg {
     width: 20px;
     height: 20px;
+  }
+  
+  .keyboard-help {
+    font-size: 10px;
+    padding: 6px 10px;
   }
 }
 

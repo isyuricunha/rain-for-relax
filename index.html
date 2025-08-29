@@ -71,6 +71,9 @@
 					</button>
 					<input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.5" aria-label="Volume control">
 				</div>
+				<div id="keyboard-help" class="keyboard-help">
+					<span>↑/↓: Volume | M: Mute | Space: Toggle</span>
+				</div>
 				<h2>
 					And, <a href="javascript:history.go(0)">click here to begin.</a> 🌧️
 				</h2>
@@ -209,6 +212,91 @@
 
 				// Save preferences when volume changes
 				audio.addEventListener('volumechange', saveVolumePreference);
+
+				// Handle keyboard help notification
+				const keyboardHelp = document.getElementById('keyboard-help');
+				let helpTimeout;
+
+				function hideKeyboardHelp() {
+					keyboardHelp.style.animation = 'fadeOut 0.5s ease-out forwards';
+					sessionStorage.setItem('keyboardHelpShown', 'true');
+				}
+
+				// Hide help after delay or on first interaction
+				function setupKeyboardHelp() {
+					if (sessionStorage.getItem('keyboardHelpShown')) {
+						keyboardHelp.style.display = 'none';
+						return;
+					}
+
+					helpTimeout = setTimeout(hideKeyboardHelp, 8000);
+
+					// Hide on any interaction
+					const hideOnInteraction = () => {
+						clearTimeout(helpTimeout);
+						hideKeyboardHelp();
+						document.removeEventListener('click', hideOnInteraction);
+						document.removeEventListener('keydown', hideOnInteraction);
+						volumeSlider.removeEventListener('input', hideOnInteraction);
+						muteButton.removeEventListener('click', hideOnInteraction);
+					};
+
+					document.addEventListener('click', hideOnInteraction);
+					document.addEventListener('keydown', hideOnInteraction);
+					volumeSlider.addEventListener('input', hideOnInteraction);
+					muteButton.addEventListener('click', hideOnInteraction);
+				}
+
+				// Initialize keyboard help
+				setupKeyboardHelp();
+
+				// Keyboard shortcuts
+				document.addEventListener('keydown', function(e) {
+					switch(e.key) {
+						case ' ':
+						case 'Enter':
+							e.preventDefault(); // Prevent default space/enter behavior
+							toggleMute();
+							break;
+						case 'm':
+						case 'M':
+							toggleMute();
+							break;
+						case 'ArrowUp':
+							e.preventDefault(); // Prevent page scrolling
+							adjustVolume(0.1);
+							break;
+						case 'ArrowDown':
+							e.preventDefault(); // Prevent page scrolling
+							adjustVolume(-0.1);
+							break;
+					}
+				});
+
+				// Toggle mute function
+				function toggleMute() {
+					if (isMuted) {
+						audio.volume = lastVolume || 0.5;
+						volumeSlider.value = lastVolume || 0.5;
+					} else {
+						lastVolume = audio.volume;
+						audio.volume = 0;
+						volumeSlider.value = 0;
+					}
+					isMuted = !isMuted;
+					updateMuteButton();
+				}
+
+				// Adjust volume by a delta
+				function adjustVolume(delta) {
+					let newVolume = parseFloat(audio.volume) + delta;
+					newVolume = Math.max(0, Math.min(1, newVolume)); // Clamp between 0 and 1
+					audio.volume = newVolume;
+					volumeSlider.value = newVolume;
+					lastVolume = newVolume;
+					isMuted = false;
+					updateMuteButton();
+				}
 			});
 		</script>
 	</body>
