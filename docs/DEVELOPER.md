@@ -1,105 +1,139 @@
 # 🌧️ Rain for Relax - Developer Documentation
 
-## Project Structure
+## 🏗️ Project Structure
 
 ```
 rain-for-relax/
 ├── assets/
-│   ├── images/       # Image assets (icons, logos)
+│   ├── images/       # Icons and logos
+│   │   ├── cloud.png
+│   │   ├── discord.png
+│   │   ├── github.png
+│   │   ├── linkedin.png
+│   │   ├── logo.ico
+│   │   ├── logo.png
+│   │   ├── mail.png
+│   │   └── telegram.png
 │   ├── chill-rain.mp4 # Background video
 │   └── rain-chill.mp3 # Audio file
 ├── docs/             # Documentation
-│   ├── USER_GUIDE.md  # End-user documentation
+│   ├── USER_GUIDE.md  # User documentation
 │   └── DEVELOPER.md   # This file
-├── .github/          # GitHub Actions workflows
+├── .github/          # GitHub workflows
 ├── index.html        # Main HTML file
 ├── main.css          # Styles
-├── vercel.json       # Vercel deployment config
-└── README.md         # Project overview
+├── vercel.json       # Vercel config
+└── license.md        # License information
 ```
 
-## Local Development
+## 🛠️ Technical Details
 
-### Prerequisites
-- Modern web browser
-- (Optional) Local web server
+### Core Technologies
+- **HTML5**: Semantic markup
+- **CSS3**: Styling with modern features (Flexbox, CSS Variables)
+- **Vanilla JavaScript**: No frameworks or build tools
+- **Web Audio API**: For smooth volume control
 
-### Setup
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/isyuricunha/rain-for-relax.git
-   cd rain-for-relax
-   ```
+### Key Features Implementation
 
-2. Start a local server:
-   ```bash
-   # Python 3
-   python -m http.server 8000
-   # or Node.js
-   npx serve .
-   ```
-3. Open `http://localhost:8000` in your browser
+#### 1. Audio Playback
+- Single `<audio>` element in `index.html`
+- Autoplay with fallback for browser restrictions
+- Loop enabled for continuous playback
 
-## Audio Implementation
+#### 2. Volume Control
+- Custom slider with cross-browser support
+- Mute toggle with visual feedback
+- Volume persistence using `localStorage`
 
-### Audio Element
-- Located in `index.html` with ID `rain-audio`
-- Autoplays on page load (subject to browser autoplay policies)
-- Loops continuously
-- Volume controlled via JavaScript
+#### 3. Keyboard Shortcuts
+- Event listeners for keyboard input
+- Prevent default browser behavior where needed
+- Visual feedback for user actions
 
-### Volume Control
-- Uses the Web Audio API for smooth volume changes
-- Volume range: 0 (mute) to 1 (max)
-- Current volume is saved to `localStorage`
+## 🚀 Local Development
 
-## Styling
+### No Build Step Required
+This project uses vanilla web technologies - just open `index.html` in a browser!
 
-### Color Scheme
-- Background: Dark gradient with video overlay
-- Text: White with subtle shadows for readability
-- Controls: Semi-transparent white with hover effects
+### Optional: Local Server
+For testing with a local server (bypasses some browser restrictions):
 
-### Responsive Design
-- Adapts to different screen sizes
-- Touch-friendly controls for mobile devices
-- Maintains aspect ratio of video background
+```bash
+# Python 3
+python -m http.server 8000
 
-## Deployment
+# Or with PHP
+php -S localhost:8000
+```
+
+Then visit `http://localhost:8000`
+
+## 🧪 Testing
+
+### Manual Testing
+1. **Audio Playback**
+   - Verify autoplay works (may require user interaction in some browsers)
+   - Test volume controls (slider and mute button)
+   - Check if volume persists on page refresh
+
+2. **Responsive Design**
+   - Test on various screen sizes
+   - Verify touch controls on mobile devices
+   - Check landscape/portrait orientations
+
+3. **Browser Compatibility**
+   - Chrome (latest)
+   - Firefox (latest)
+   - Safari (desktop and iOS)
+   - Edge (latest)
+
+## 🚀 Deployment
 
 ### GitHub Pages
-1. Push to `main` branch
+1. Push to the `main` branch
 2. GitHub Actions will automatically deploy to Pages
 
 ### Vercel
-1. Import the repository into Vercel
+1. Import repository into Vercel
 2. Automatic deployments on push to `main`
 
-## Testing
+## 📝 Code Style
 
-### Manual Testing
-- Test on different browsers (Chrome, Firefox, Safari, Edge)
-- Test on mobile devices
-- Verify volume persistence
-- Test keyboard shortcuts
+### HTML
+- Semantic elements
+- Proper indentation (2 spaces)
+- Descriptive class names
 
-### Browser Support
-- Modern browsers (Chrome, Firefox, Safari, Edge)
-- Mobile Safari (iOS 10+)
-- Chrome for Android
+### CSS
+- BEM naming convention
+- Mobile-first approach
+- CSS Variables for theming
 
-## Contributing
+### JavaScript
+- ES6+ syntax
+- Event delegation where appropriate
+- Clear function and variable names
+
+## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-### Code Style
-- Use semantic HTML5
-- Follow BEM naming convention for CSS
-- Use ES6+ JavaScript
-- Keep code comments clear and concise
+### Pull Request Guidelines
+- Keep changes focused and atomic
+- Update documentation as needed
+- Test your changes thoroughly
 
-## License
-MIT - See [LICENSE](LICENSE) for details.
+## 📜 License
+
+This project is licensed under the MIT License - see the [LICENSE](license.md) file for details.
+
+## 🙏 Acknowledgments
+
+- Rain sounds and video are royalty-free
+- Icons from [Feather Icons](https://feathericons.com/)
+- Fonts from [Google Fonts](https://fonts.google.com/)
