@@ -124,6 +124,90 @@ a:hover {
   outline: none;
 }
 
+/* Sleep Timer */
+.sleep-timer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin: 15px auto;
+}
+
+#timer-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+  padding: 0;
+}
+
+#timer-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+#timer-btn.active {
+  color: #4CAF50;
+  border-color: #4CAF50;
+}
+
+.timer-options {
+  position: absolute;
+  bottom: 100%;
+  margin-bottom: 10px;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  border-radius: 8px;
+  padding: 10px;
+  display: none;
+  flex-wrap: wrap;
+  gap: 5px;
+  width: 200px;
+  justify-content: center;
+}
+
+.timer-options button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  color: white;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.timer-options button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+#cancel-timer {
+  margin-top: 5px;
+  background: rgba(255, 0, 0, 0.2);
+  border-color: rgba(255, 0, 0, 0.3);
+}
+
+#cancel-timer:hover {
+  background: rgba(255, 0, 0, 0.3);
+}
+
+/* Timer active state */
+#timer-btn.timer-active {
+  color: #4CAF50;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+}
+
 /* Keyboard help notification */
 .keyboard-help {
   margin: 15px auto;

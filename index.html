@@ -71,6 +71,22 @@
 					</button>
 					<input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.5" aria-label="Volume control">
 				</div>
+				<div class="sleep-timer">
+					<button id="timer-btn" aria-label="Sleep Timer">
+						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<circle cx="12" cy="12" r="10"></circle>
+							<polyline points="12 6 12 12 16 14"></polyline>
+						</svg>
+					</button>
+					<div id="timer-options" class="timer-options">
+						<button data-minutes="5">5 min</button>
+						<button data-minutes="15">15 min</button>
+						<button data-minutes="30">30 min</button>
+						<button data-minutes="60">60 min</button>
+						<button id="cancel-timer">Cancel</button>
+					</div>
+					<div id="timer-display" class="timer-display"></div>
+				</div>
 				<div id="keyboard-help" class="keyboard-help">
 					<span>↑/↓: Volume | M: Mute | Space: Toggle</span>
 				</div>
@@ -287,16 +303,90 @@
 					updateMuteButton();
 				}
 
-				// Adjust volume by a delta
+				// Adjust volume by a delta amount
 				function adjustVolume(delta) {
 					let newVolume = parseFloat(audio.volume) + delta;
-					newVolume = Math.max(0, Math.min(1, newVolume)); // Clamp between 0 and 1
+					newVolume = Math.min(1, Math.max(0, newVolume)); // Clamp between 0 and 1
 					audio.volume = newVolume;
 					volumeSlider.value = newVolume;
 					lastVolume = newVolume;
 					isMuted = false;
 					updateMuteButton();
 				}
+
+				// Sleep Timer Functionality
+				const timerBtn = document.getElementById('timer-btn');
+				const timerOptions = document.getElementById('timer-options');
+				const timerDisplay = document.getElementById('timer-display');
+				let timerInterval;
+				let endTime;
+
+				// Toggle timer options
+				timerBtn.addEventListener('click', function() {
+					timerOptions.style.display = timerOptions.style.display === 'flex' ? 'none' : 'flex';
+				});
+
+				// Start timer
+				timerOptions.querySelectorAll('button[data-minutes]').forEach(button => {
+					button.addEventListener('click', function() {
+						const minutes = parseInt(this.getAttribute('data-minutes'));
+						startTimer(minutes * 60); // Convert minutes to seconds
+						timerOptions.style.display = 'none';
+					});
+				});
+
+				// Cancel timer
+				document.getElementById('cancel-timer').addEventListener('click', function() {
+					clearInterval(timerInterval);
+					timerDisplay.textContent = '';
+					timerBtn.classList.remove('timer-active');
+					timerOptions.style.display = 'none';
+				});
+
+				// Start the timer
+				function startTimer(duration) {
+					clearInterval(timerInterval);
+					endTime = Date.now() + duration * 1000;
+					timerBtn.classList.add('timer-active');
+					updateTimerDisplay();
+					timerInterval = setInterval(updateTimerDisplay, 1000);
+				}
+
+				// Update the timer display
+				function updateTimerDisplay() {
+					const now = Date.now();
+					const remaining = Math.max(0, Math.ceil((endTime - now) / 1000));
+
+					if (remaining <= 0) {
+						clearInterval(timerInterval);
+						audio.pause();
+						timerDisplay.textContent = 'Timer: Complete';
+						timerBtn.classList.remove('timer-active');
+						setTimeout(() => {
+							timerDisplay.textContent = '';
+						}, 3000);
+						return;
+					}
+
+					const minutes = Math.floor(remaining / 60);
+					const seconds = remaining % 60;
+					timerDisplay.textContent = `Timer: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+				}
+
+				// Close timer options when clicking outside
+				document.addEventListener('click', function(event) {
+					if (!event.target.closest('.sleep-timer') && !event.target.closest('#timer-options')) {
+						timerOptions.style.display = 'none';
+					}
+				});
+
+				// Keyboard shortcut for timer (T key)
+				document.addEventListener('keydown', function(e) {
+					if (e.key.toLowerCase() === 't') {
+						timerOptions.style.display = timerOptions.style.display === 'flex' ? 'none' : 'flex';
+						e.preventDefault();
+					}
+				});
 			});
 		</script>
 	</body>
