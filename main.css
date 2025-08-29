@@ -49,6 +49,98 @@ a:hover {
   color: orangered;
 }
 
+/* Volume Control Styles */
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+  width: 200px;
+  max-width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#mute-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+  padding: 0;
+}
+
+#mute-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+#mute-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+}
+
+#volume-slider {
+  flex: 1;
+  -webkit-appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.3);
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+#volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#volume-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+#volume-slider:hover {
+  height: 6px;
+}
+
+#volume-slider:focus {
+  outline: none;
+}
+
+/* Hide the volume slider by default on mobile */
+@media (max-width: 480px) {
+  .volume-control {
+    width: 160px;
+  }
+  
+  #mute-btn {
+    width: 36px;
+    height: 36px;
+  }
+  
+  #mute-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
 .bottomright {
   position: absolute;
   bottom: 0.65%;

@@ -57,9 +57,20 @@
 					alt="Logo"
 				/>
 				<h1>Just appreciate. <a>Relax.</a> Be well.</h1>
-				<audio autoplay loop>
-					<source src="assets/rain-chill.mp3" />
+				<audio id="rain-audio" autoplay loop>
+					<source src="assets/rain-chill.mp3" type="audio/mp3" />
 				</audio>
+				<div class="volume-control">
+					<button id="mute-btn" aria-label="Mute/Unmute">
+						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+							<path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+							<line x1="12" y1="19" x2="12" y2="23"></line>
+							<line x1="8" y1="23" x2="16" y2="23"></line>
+						</svg>
+					</button>
+					<input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.5" aria-label="Volume control">
+				</div>
 				<h2>
 					And, <a href="javascript:history.go(0)">click here to begin.</a> 🌧️
 				</h2>
@@ -118,5 +129,87 @@
 				</div>
 			</div>
 		</center>
+		<script>
+			document.addEventListener('DOMContentLoaded', function() {
+				const audio = document.getElementById('rain-audio');
+				const volumeSlider = document.getElementById('volume-slider');
+				const muteButton = document.getElementById('mute-btn');
+				let isMuted = false;
+                let lastVolume = 0.5; // Default volume
+
+				// Set initial volume
+                audio.volume = lastVolume;
+                volumeSlider.value = lastVolume;
+
+				// Update volume when slider changes
+				volumeSlider.addEventListener('input', function() {
+					audio.volume = this.value;
+                    lastVolume = this.value;
+                    isMuted = false;
+                    updateMuteButton();
+				});
+
+				// Toggle mute when button is clicked
+				muteButton.addEventListener('click', function() {
+					if (isMuted) {
+						// Unmute
+						audio.volume = lastVolume || 0.5;
+						volumeSlider.value = lastVolume || 0.5;
+					} else {
+						// Mute
+						lastVolume = audio.volume;
+						audio.volume = 0;
+						volumeSlider.value = 0;
+					}
+					isMuted = !isMuted;
+					updateMuteButton();
+				});
+
+				// Update mute button icon based on mute state
+				function updateMuteButton() {
+					const icon = muteButton.querySelector('svg');
+					if (isMuted || audio.volume === 0) {
+						icon.innerHTML = `
+							<path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+							<path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+							<line x1="12" y1="19" x2="12" y2="23"></line>
+							<line x1="8" y1="23" x2="16" y2="23"></line>
+							<line x1="5" y1="5" x2="19" y2="19" stroke="red" stroke-width="2">
+						`;
+					} else {
+						icon.innerHTML = `
+							<path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+							<path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+							<line x1="12" y1="19" x2="12" y2="23"></line>
+							<line x1="8" y1="23" x2="16" y2="23"></line>
+						`;
+					}
+				}
+
+				// Initialize button state
+				updateMuteButton();
+
+				// Save volume preference in localStorage
+				function saveVolumePreference() {
+					localStorage.setItem('rainVolume', audio.volume);
+				}
+
+				// Load volume preference from localStorage
+				function loadVolumePreference() {
+					const savedVolume = localStorage.getItem('rainVolume');
+					if (savedVolume !== null) {
+						audio.volume = parseFloat(savedVolume);
+						volumeSlider.value = savedVolume;
+						lastVolume = parseFloat(savedVolume);
+					}
+				}
+
+				// Load saved preferences
+				loadVolumePreference();
+
+				// Save preferences when volume changes
+				audio.addEventListener('volumechange', saveVolumePreference);
+			});
+		</script>
 	</body>
 </html>
